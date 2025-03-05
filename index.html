@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Turnos de Predicación</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Sistema para generar turnos automáticos para 66 voluntarios de predicación con roles Publicador y Capitán">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <header>
+    <h1>Generador de Turnos de Predicación</h1>
+    <p>Predicación con carritos – Testigos de Jehová</p>
+  </header>
+
+  <main>
+    <!-- Sección para ajustar la disponibilidad -->
+    <section id="availability-section">
+      <h2>Ajuste de Disponibilidad</h2>
+      <p>Marque (X) los turnos en los que está disponible.</p>
+      <div id="persons-table-container"></div>
+      <button id="save-availability">Guardar Disponibilidad</button>
+    </section>
+
+    <!-- Sección para generar y ver el schedule -->
+    <section id="schedule-section">
+      <h2>Turnos Generados</h2>
+      <label for="week-selector">Selecciona el ciclo:</label>
+      <select id="week-selector">
+        <option value="S1">Semana S1</option>
+        <option value="S2" selected>Semana S2</option>
+        <option value="S3">Semana S3</option>
+        <option value="S4">Semana S4</option>
+      </select>
+      <button id="generate-turns">Generar Turnos para la Semana</button>
+      <div id="schedule-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Utilice este sistema para distribuir de forma equitativa los turnos de predicación. 
+      Para modificar asignaciones fijas o la disponibilidad, edite la tabla y guarde los cambios.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
