@@ -1,71 +1,175 @@
-/* Variables para colores y fuente (podrías integrarlas al :root si lo deseas) */
+/* Variables de diseño */
 :root {
-  --color-primary: #2c7a7b;
-  --font: Arial, sans-serif;
+  --color-primary: #2c7a7b;      /* Color principal para header y acentos */
+  --color-secondary: #4caf50;    /* Color secundario para botones principales */
+  --color-tertiary: #fafafa;     /* Fondo claro para el body */
+  --color-accent: #ff9800;       /* Color de acento para botones específicos */
+  --color-dark: #607d8b;         /* Color oscuro para algunos botones */
+  --color-muted: #795548;        /* Otro tono para diferenciar botones */
+  --text-color: #333;
+  --font-family: 'Roboto', sans-serif;
+  --padding: 20px;
+  --border-radius: 8px;
 }
 
-body {
-  font-family: var(--font);
-  background: #f5f5f5;
+/* Reset y box-sizing */
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Estilos globales */
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--color-tertiary);
+  padding: var(--padding);
+  line-height: 1.6;
+}
+
+/* Header */
 header {
   background: var(--color-primary);
-  color: white;
-  padding: 20px;
+  color: #fff;
+  padding: 1.5rem;
   text-align: center;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
 }
 
-section {
-  margin-bottom: 30px;
-  background: white;
-  padding: 15px;
-  border-radius: 5px;
+/* Main y secciones */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-form label,
-form select {
-  margin-right: 10px;
-  margin-bottom: 5px;
+/* Titulares de sección */
+.section h2 {
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
 }
 
-#availabilityList div {
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 5px;
+/* Grupos de formulario */
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+}
+
+/* Lista de disponibilidad */
+#availabilityList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Botones generales */
 button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: var(--color-primary);
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-secondary);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
 }
 
 button:hover {
-  background-color: #285e61;
+  background-color: var(--color-primary);
+  transform: translateY(-2px);
 }
 
+/* Botones específicos */
+#btnFixAssignment {
+  background-color: var(--color-accent);
+}
+
+#btnFixAssignment:hover {
+  background-color: #e68900;
+}
+
+#btnSaveAvailability,
+#btnSaveStorage {
+  background-color: var(--color-dark);
+}
+
+#btnSaveAvailability:hover,
+#btnSaveStorage:hover {
+  background-color: #455a64;
+}
+
+#btnLoadStorage {
+  background-color: var(--color-muted);
+}
+
+#btnLoadStorage:hover {
+  background-color: #5d4037;
+}
+
+/* Tabla del calendario */
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .schedule-table th,
 .schedule-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 0.75rem;
   text-align: center;
 }
 
 .schedule-table th {
   background-color: var(--color-primary);
-  color: white;
+  color: #fff;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  main {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .section {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    flex: 1 1 calc(33.33% - 20px);
+  }
 }
