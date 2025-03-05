@@ -3,40 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendario Mensual de Turnos</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Gestor de Turnos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Calendario Mensual de Turnos</h1>
+    <h1>Gestor de Turnos</h1>
   </header>
-
+  
   <main>
-    <!-- Sección de opciones de configuración global -->
-    <section id="config">
-      <h2>Configuración</h2>
-      <form id="configForm">
-        <label>
-          <input type="checkbox" id="fijarTurnoCheckbox">
-          Permitir asignar turno fijo
-        </label>
-        <br>
-        <label>
-          <input type="checkbox" id="turnos15Checkbox">
-          Turnos cada 15 días
-        </label>
-        <br>
-        <label>
-          <input type="checkbox" id="allowMultipleCheckbox" checked>
-          Permitir que una persona atienda múltiples turnos (incluso los 10)
-        </label>
-      </form>
-    </section>
-
-    <!-- Sección para fijar directamente algún turno -->
-    <section id="fixedAssignment">
-      <h2>Asignación Fija de Turnos</h2>
-      <form id="fixedForm">
+    <!-- Asignaciones fijas -->
+    <section class="section" id="fixedAssignmentSection">
+      <h2>Asignaciones Fijas</h2>
+      <div class="form-group">
         <label for="weekSelect">Semana:</label>
         <select id="weekSelect">
           <option value="S1">S1</option>
@@ -44,7 +23,8 @@
           <option value="S3">S3</option>
           <option value="S4">S4</option>
         </select>
-
+      </div>
+      <div class="form-group">
         <label for="turnSelect">Turno:</label>
         <select id="turnSelect">
           <option value="MM">MM</option>
@@ -58,28 +38,27 @@
           <option value="S">S</option>
           <option value="D">D</option>
         </select>
-
+      </div>
+      <div class="form-group">
         <label for="roleSelect">Rol:</label>
         <select id="roleSelect">
           <option value="capitan">Capitán</option>
-          <option value="publicador1">Publicador Slot 1</option>
-          <option value="publicador2">Publicador Slot 2</option>
-          <option value="publicador3">Publicador Slot 3</option>
+          <option value="publicador1">Publicador 1</option>
+          <option value="publicador2">Publicador 2</option>
+          <option value="publicador3">Publicador 3</option>
         </select>
-
+      </div>
+      <div class="form-group">
         <label for="personSelect">Persona:</label>
-        <select id="personSelect">
-          <!-- Se llenará dinámicamente según el rol seleccionado -->
-        </select>
-
-        <button type="button" id="btnFixAssignment">Fijar Turno</button>
-      </form>
+        <select id="personSelect"></select>
+      </div>
+      <button id="btnFixAssignment">Fijar Asignación</button>
     </section>
-
-    <!-- Sección para asignar disponibilidad en cada turno (cuadrícula por turno) -->
-    <section id="availabilitySection">
-      <h2>Asignar Disponibilidad</h2>
-      <form id="availabilityForm">
+    
+    <!-- Disponibilidad -->
+    <section class="section" id="availabilitySection">
+      <h2>Disponibilidad</h2>
+      <div class="form-group">
         <label for="availWeekSelect">Semana:</label>
         <select id="availWeekSelect">
           <option value="S1">S1</option>
@@ -87,7 +66,8 @@
           <option value="S3">S3</option>
           <option value="S4">S4</option>
         </select>
-
+      </div>
+      <div class="form-group">
         <label for="availTurnSelect">Turno:</label>
         <select id="availTurnSelect">
           <option value="MM">MM</option>
@@ -101,24 +81,34 @@
           <option value="S">S</option>
           <option value="D">D</option>
         </select>
-
-        <div id="availabilityList">
-          <!-- Se generarán checkboxes para cada persona -->
-        </div>
-        <button type="button" id="btnSaveAvailability">Guardar Disponibilidad</button>
-      </form>
-    </section>
-
-    <!-- Sección donde se muestra el calendario resultante -->
-    <section id="scheduleSection">
-      <h2>Calendario Generado</h2>
-      <button type="button" id="btnGenerateSchedule">Generar Calendario</button>
-      <div id="scheduleTableContainer">
-        <!-- La tabla se generará aquí -->
       </div>
+      <div id="availabilityList"></div>
+      <button id="btnSaveAvailability">Guardar Disponibilidad</button>
+    </section>
+    
+    <!-- Generación de calendario -->
+    <section class="section" id="scheduleSection">
+      <h2>Generar Calendario</h2>
+      <div class="form-group">
+        <input type="checkbox" id="allowMultipleCheckbox">
+        <label for="allowMultipleCheckbox">Permitir asignar múltiples turnos por semana</label>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" id="turnos15Checkbox">
+        <label for="turnos15Checkbox">Turnos cada 15 días</label>
+      </div>
+      <button id="btnGenerateSchedule">Generar Calendario</button>
+      <div id="scheduleTableContainer"></div>
+    </section>
+    
+    <!-- Guardado y carga en LocalStorage -->
+    <section class="section" id="storageSection">
+      <h2>Almacenamiento</h2>
+      <button id="btnSaveStorage">Guardar en LocalStorage</button>
+      <button id="btnLoadStorage">Cargar desde LocalStorage</button>
     </section>
   </main>
-
+  
   <script src="script.js"></script>
 </body>
 </html>
