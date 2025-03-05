@@ -133,7 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
     availListDiv.innerHTML = "";
     const key = getAvailabilityKey();
     // Si no hay datos guardados, por defecto todas están disponibles.
-    const savedAvailability = availability[key] || persons.map(p => p.name);
+    const savedAvailability = (availability[key] && availability[key].length > 0)
+  ? availability[key]
+  : persons.map(p => p.name);
     
     persons.forEach(p => {
       const container = document.createElement("div");
