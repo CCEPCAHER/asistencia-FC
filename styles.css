@@ -1,0 +1,153 @@
+/* ========================
+   VARIABLES Y RESET
+========================= */
+:root {
+  --color-primary: #2c7a7b;
+  --color-primary-hover: #285e61;
+  --color-text: #333;
+  --transition: 0.3s ease;
+  --bg-light: #f0f4f8;
+  --font: 'Roboto', sans-serif;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  color: var(--color-text);
+  padding: 20px;
+}
+
+/* ========================
+   ENCABEZADO Y FOOTER
+========================= */
+header {
+  text-align: center;
+  padding: 20px;
+  background: var(--color-primary);
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ========================
+   BOTONES
+========================= */
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* ========================
+   TABLAS (Disponibilidad y Schedule)
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+/* ========================
+   CHECKBOXES
+========================= */
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================
+   ESTILOS POR COLUMNA (Disponibilidad)
+   Colores según la primera letra del slot:
+   M: lila, X: marrón, J: jazmín, V: violeta, S: suave, D: dorado
+========================= */
+.col-m { background-color: #D8BFD8; }
+.col-x { background-color: #A0522D; }
+.col-j { background-color: #FFFACD; }
+.col-v { background-color: #8A2BE2; }
+.col-s { background-color: #ADD8E6; }
+.col-d { background-color: #FFD700; }
+
+/* ========================
+   ESTILOS POR FILA (Schedule)
+   Cada fila (turno) se marca con un borde según el día
+========================= */
+.dia-martes { border-left: 5px solid #D8BFD8; }
+.dia-miércoles { border-left: 5px solid #A0522D; }
+.dia-jueves { border-left: 5px solid #FFFACD; }
+.dia-viernes { border-left: 5px solid #8A2BE2; }
+.dia-sábado { border-left: 5px solid #ADD8E6; }
+.dia-domingo { border-left: 5px solid #FFD700; }
+
+/* ========================
+   ESTILOS PARA FECHAS EN SCHEDULE
+========================= */
+.current-date {
+  background-color: #007bff;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  animation: blink 1.5s infinite;
+}
+
+.next-date {
+  background-color: #28a745;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* ========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+  table th, table td {
+    font-size: 0.7rem;
+    padding: 4px;
+  }
+  button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
