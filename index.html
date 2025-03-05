@@ -3,47 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador de Turnos de Predicación</title>
+  <title>Calendario Mensual de Turnos</title>
   <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Sistema para generar turnos automáticos para 66 voluntarios de predicación con roles Publicador y Capitán">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <header>
-    <h1>Generador de Turnos de Predicación</h1>
-    <p>Predicación con carritos – Testigos de Jehová</p>
+    <h1>Calendario Mensual de Turnos</h1>
   </header>
 
   <main>
-    <!-- Sección para ajustar la disponibilidad -->
-    <section id="availability-section">
-      <h2>Ajuste de Disponibilidad</h2>
-      <p>Marque (X) los turnos en los que está disponible.</p>
-      <div id="persons-table-container"></div>
-      <button id="save-availability">Guardar Disponibilidad</button>
+    <!-- Sección de opciones de configuración global -->
+    <section id="config">
+      <h2>Configuración</h2>
+      <form id="configForm">
+        <label>
+          <input type="checkbox" id="fijarTurnoCheckbox">
+          Permitir asignar turno fijo
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" id="turnos15Checkbox">
+          Turnos cada 15 días
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" id="allowMultipleCheckbox" checked>
+          Permitir que una persona atienda múltiples turnos (incluso los 10)
+        </label>
+      </form>
     </section>
 
-    <!-- Sección para generar y ver el schedule -->
-    <section id="schedule-section">
-      <h2>Turnos Generados</h2>
-      <label for="week-selector">Selecciona el ciclo:</label>
-      <select id="week-selector">
-        <option value="S1">Semana S1</option>
-        <option value="S2" selected>Semana S2</option>
-        <option value="S3">Semana S3</option>
-        <option value="S4">Semana S4</option>
-      </select>
-      <button id="generate-turns">Generar Turnos para la Semana</button>
-      <div id="schedule-container"></div>
+    <!-- Sección para fijar directamente algún turno -->
+    <section id="fixedAssignment">
+      <h2>Asignación Fija de Turnos</h2>
+      <form id="fixedForm">
+        <label for="weekSelect">Semana:</label>
+        <select id="weekSelect">
+          <option value="S1">S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+          <option value="S4">S4</option>
+        </select>
+
+        <label for="turnSelect">Turno:</label>
+        <select id="turnSelect">
+          <option value="MM">MM</option>
+          <option value="MT1">MT1</option>
+          <option value="MT2">MT2</option>
+          <option value="XT1">XT1</option>
+          <option value="XT2">XT2</option>
+          <option value="J">J</option>
+          <option value="VT1">VT1</option>
+          <option value="VT2">VT2</option>
+          <option value="S">S</option>
+          <option value="D">D</option>
+        </select>
+
+        <label for="roleSelect">Rol:</label>
+        <select id="roleSelect">
+          <option value="capitan">Capitán</option>
+          <option value="publicador1">Publicador Slot 1</option>
+          <option value="publicador2">Publicador Slot 2</option>
+          <option value="publicador3">Publicador Slot 3</option>
+        </select>
+
+        <label for="personSelect">Persona:</label>
+        <select id="personSelect">
+          <!-- Se llenará dinámicamente según el rol seleccionado -->
+        </select>
+
+        <button type="button" id="btnFixAssignment">Fijar Turno</button>
+      </form>
+    </section>
+
+    <!-- Sección para asignar disponibilidad en cada turno (cuadrícula por turno) -->
+    <section id="availabilitySection">
+      <h2>Asignar Disponibilidad</h2>
+      <form id="availabilityForm">
+        <label for="availWeekSelect">Semana:</label>
+        <select id="availWeekSelect">
+          <option value="S1">S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+          <option value="S4">S4</option>
+        </select>
+
+        <label for="availTurnSelect">Turno:</label>
+        <select id="availTurnSelect">
+          <option value="MM">MM</option>
+          <option value="MT1">MT1</option>
+          <option value="MT2">MT2</option>
+          <option value="XT1">XT1</option>
+          <option value="XT2">XT2</option>
+          <option value="J">J</option>
+          <option value="VT1">VT1</option>
+          <option value="VT2">VT2</option>
+          <option value="S">S</option>
+          <option value="D">D</option>
+        </select>
+
+        <div id="availabilityList">
+          <!-- Se generarán checkboxes para cada persona -->
+        </div>
+        <button type="button" id="btnSaveAvailability">Guardar Disponibilidad</button>
+      </form>
+    </section>
+
+    <!-- Sección donde se muestra el calendario resultante -->
+    <section id="scheduleSection">
+      <h2>Calendario Generado</h2>
+      <button type="button" id="btnGenerateSchedule">Generar Calendario</button>
+      <div id="scheduleTableContainer">
+        <!-- La tabla se generará aquí -->
+      </div>
     </section>
   </main>
-
-  <footer>
-    <p>
-      Utilice este sistema para distribuir de forma equitativa los turnos de predicación. 
-      Para modificar asignaciones fijas o la disponibilidad, edite la tabla y guarde los cambios.
-    </p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
