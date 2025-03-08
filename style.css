@@ -1,175 +1,145 @@
-/* Variables de diseño */
-:root {
-  --color-primary: #2c7a7b;      /* Color principal para header y acentos */
-  --color-secondary: #4caf50;    /* Color secundario para botones principales */
-  --color-tertiary: #fafafa;     /* Fondo claro para el body */
-  --color-accent: #ff9800;       /* Color de acento para botones específicos */
-  --color-dark: #607d8b;         /* Color oscuro para algunos botones */
-  --color-muted: #795548;        /* Otro tono para diferenciar botones */
-  --text-color: #333;
-  --font-family: 'Roboto', sans-serif;
-  --padding: 20px;
-  --border-radius: 8px;
-}
-
-/* Reset y box-sizing */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Estilos globales */
 body {
-  font-family: var(--font-family);
-  color: var(--text-color);
-  background: var(--color-tertiary);
-  padding: var(--padding);
-  line-height: 1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
 }
 
-/* Header */
 header {
-  background: var(--color-primary);
-  color: #fff;
-  padding: 1.5rem;
   text-align: center;
-  border-radius: var(--border-radius);
-  margin-bottom: 1rem;
+  margin-bottom: 30px;
 }
 
-/* Main y secciones */
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+h1 {
+  color: #2c3e50;
 }
 
 .section {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Titulares de sección */
-.section h2 {
-  margin-bottom: 1rem;
-  color: var(--color-primary);
-  border-bottom: 2px solid var(--color-primary);
-  padding-bottom: 0.5rem;
-}
-
-/* Grupos de formulario */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
   display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.form-group select,
-.form-group input[type="text"],
-.form-group input[type="number"] {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-}
-
-/* Lista de disponibilidad */
-#availabilityList {
-  display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
-.checkbox-container {
-  display: flex;
-  align-items: center;
+select, button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
 }
 
-/* Botones generales */
 button {
-  padding: 0.75rem 1.25rem;
-  background-color: var(--color-secondary);
-  color: #fff;
+  background-color: #4CAF50;
+  color: white;
   border: none;
-  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-size: 1rem;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: var(--color-primary);
-  transform: translateY(-2px);
+  background-color: #45a049;
 }
 
-/* Botones específicos */
-#btnFixAssignment {
-  background-color: var(--color-accent);
+#availabilityList {
+  column-count: 3;
+  margin: 15px 0;
 }
 
-#btnFixAssignment:hover {
-  background-color: #e68900;
+.checkbox-container {
+  margin: 5px 0;
 }
 
-#btnSaveAvailability,
-#btnSaveStorage {
-  background-color: var(--color-dark);
-}
-
-#btnSaveAvailability:hover,
-#btnSaveStorage:hover {
-  background-color: #455a64;
-}
-
-#btnLoadStorage {
-  background-color: var(--color-muted);
-}
-
-#btnLoadStorage:hover {
-  background-color: #5d4037;
-}
-
-/* Tabla del calendario */
+/* Añadir estas reglas */
 .schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.schedule-table th,
-.schedule-table td {
-  border: 1px solid #ddd;
-  padding: 0.75rem;
-  text-align: center;
+  background: white;
+  width: auto !important;
 }
 
 .schedule-table th {
-  background-color: var(--color-primary);
-  color: #fff;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  text-align: left;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
-  main {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
+.schedule-table td {
+  min-width: 120px;
+  padding: 8px !important;
+  font-size: 12px;
+}
+
+.edit-mode td[data-field] {
+  background-color: #fff3cd !important;
+  position: relative;
+  cursor: pointer;
+}
+
+.edit-mode td[data-field]:hover::after {
+  content: "✎";
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* Colores días */
+.day-lunes { background-color: #f8d7da; }
+.day-martes-1 { background-color: #fff3cd; }
+.day-martes-2 { background-color: #e2f0cb; }
+.day-miercoles-1 { background-color: #d1ecf1; }
+.day-miercoles-2 { background-color: #f5d0c9; }
+.day-jueves { background-color: #d4edda; }
+.day-viernes-1 { background-color: #e2e3f5; }
+.day-viernes-2 { background-color: #f8e1f2; }
+.day-sabado { background-color: #ffe5d9; }
+.day-domingo { background-color: #d9e9ff; }
+
+/* Colores semanas */
+.week-S1 { background-color: #d1ecf1; }
+.week-S2 { background-color: #f5d0c9; }
+.week-S3 { background-color: #d4edda; }
+.week-S4 { background-color: #e2e3f5; }
+
+#assignmentAnalysis ul {
+  list-style: none;
+  padding: 0;
+}
+
+#assignmentAnalysis li {
+  padding: 5px 0;
+}
+/* style.css - Añadir al final */
+.schedule-table {
+  background: white !important;
+}
+
+.schedule-table td, .schedule-table th {
+  min-width: 120px;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
   }
   
-  .section {
-    flex: 1 1 calc(50% - 20px);
+  .schedule-table, .schedule-table * {
+    visibility: visible;
   }
-}
-
-@media (min-width: 1024px) {
-  .section {
-    flex: 1 1 calc(33.33% - 20px);
+  
+  .schedule-table {
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
