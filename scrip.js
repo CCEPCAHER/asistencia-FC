@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Cargamos la lista de personas desde localStorage
   let persons = JSON.parse(localStorage.getItem('persons'));
   
-  // Si no existe o no tiene exactamente 20 elementos, se reinicializa
+  // Si no existe o no tiene exactamente 20 elementos, se reinicializa la lista
   if (!persons || persons.length !== 20) {
     persons = [];
     for (let i = 1; i <= 20; i++) {
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     alert('Reunión guardada y registro actualizado.');
   });
 
-  // Función para exportar la información a CSV (que puede abrirse en Excel)
+  // Botón para exportar la información a CSV (compatible con Excel)
   document.getElementById('exportExcel').addEventListener('click', function() {
     let csvContent = "data:text/csv;charset=utf-8,ID,Nombre,Total Faltas,Historial\n";
     persons.forEach(person => {
@@ -137,5 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  });
+
+  // Botón para reiniciar el listado (borrar datos del localStorage)
+  document.getElementById('resetList').addEventListener('click', function() {
+    if (confirm("¿Estás seguro de reiniciar el listado? Se perderán los datos guardados.")) {
+      localStorage.removeItem('persons');
+      location.reload();
+    }
   });
 });
