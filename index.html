@@ -2,98 +2,51 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestor de Turnos</title>
-  <link rel="stylesheet" href="style.css">
-<!-- En el head -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Control de Asistencia</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Gestor de Turnos</h1>
-  </header>
-  
-  <main>
-    <section class="section" id="fixedAssignmentSection">
-      <h2>Asignaciones Fijas</h2>
-      <div class="form-group">
-        <label>Semana:
-          <select id="weekSelect">
-            <option value="S1">S1</option>
-            <option value="S2">S2</option>
-            <option value="S3">S3</option>
-            <option value="S4">S4</option>
-          </select>
-        </label>
-        <label>Turno:
-          <select id="turnSelect">
-            <option value="MM">MM</option><option value="MT1">MT1</option>
-            <option value="MT2">MT2</option><option value="XT1">XT1</option>
-            <option value="XT2">XT2</option><option value="J">J</option>
-            <option value="VT1">VT1</option><option value="VT2">VT2</option>
-            <option value="S">S</option><option value="D">D</option>
-          </select>
-        </label>
+  <div class="container">
+    <h1>Control de Asistencia</h1>
+    
+    <!-- Sección para definir las fechas de reunión -->
+    <div class="meeting-dates">
+      <div class="date-field">
+        <label for="weekday-date">Reunión entre semana (Jueves):</label>
+        <input type="date" id="weekday-date">
       </div>
-      <div class="form-group">
-        <label>Rol:
-          <select id="roleSelect">
-            <option value="capitan">Capitán</option>
-            <option value="publicador1">Publicador 1</option>
-            <option value="publicador2">Publicador 2</option>
-            <option value="publicador3">Publicador 3</option>
-          </select>
-        </label>
-        <label>Persona: <select id="personSelect"></select></label>
+      <div class="date-field">
+        <label for="weekend-date">Reunión fin de semana:</label>
+        <input type="date" id="weekend-date">
       </div>
-      <button id="btnFixAssignment">Fijar Asignación</button>
-    </section>
-
-    <section class="section" id="availabilitySection">
-      <h2>Disponibilidad</h2>
-      <div class="form-group">
-        <label>Semana:
-          <select id="availWeekSelect">
-            <option value="S1">S1</option>
-            <option value="S2">S2</option>
-            <option value="S3">S3</option>
-            <option value="S4">S4</option>
-          </select>
-        </label>
-        <label>Turno:
-          <select id="availTurnSelect">
-            <option value="MM">MM</option><option value="MT1">MT1</option>
-            <option value="MT2">MT2</option><option value="XT1">XT1</option>
-            <option value="XT2">XT2</option><option value="J">J</option>
-            <option value="VT1">VT1</option><option value="VT2">VT2</option>
-            <option value="S">S</option><option value="D">D</option>
-          </select>
-        </label>
-      </div>
-      <div id="availabilityList"></div>
-      <button id="btnSaveAvailability">Guardar Disponibilidad</button>
-    </section>
-
-    <section class="section" id="scheduleSection">
-      <h2>Generar Calendario</h2>
-      <div class="form-group">
-        <label><input type="checkbox" id="allowMultipleCheckbox"> Permitir múltiples turnos/semana</label>
-        <label><input type="checkbox" id="turnos15Checkbox"> Turnos cada 15 días</label>
-      </div>
-      <button id="btnGenerateSchedule">Generar Calendario</button>
-      <div id="scheduleTableContainer"></div>
-    </section>
-
-    <section class="section" id="exportSection">
-      <h2>Exportar</h2>
-      <button id="btnExportPDF">Exportar a PDF</button>
-      <button id="btnToggleEdit">Modo Edición</button>
-      <button id="btnSaveStorage">Guardar en LocalStorage</button>
-      <button id="btnLoadStorage">Cargar desde LocalStorage</button>
-    </section>
-  </main>
-
+      <button id="saveMeeting">Guardar Reunión</button>
+    </div>
+    
+    <!-- Tabla de asistencia -->
+    <table id="attendanceTable">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Jueves</th>
+          <th>Fin de Semana</th>
+          <th>Faltas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Se generarán las filas mediante JavaScript -->
+      </tbody>
+    </table>
+    
+    <!-- Botón para exportar a Excel (CSV) -->
+    <button id="exportExcel">Descargar Excel (CSV)</button>
+    
+    <!-- Sección para mostrar historial de faltas de cada persona -->
+    <h2>Historial de Faltas</h2>
+    <div id="absenceHistory">
+      <p>Haz clic en el número de faltas de cada persona para ver el detalle.</p>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
