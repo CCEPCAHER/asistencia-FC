@@ -1,8 +1,11 @@
 // Al cargar el DOM se inicializa la app
 document.addEventListener('DOMContentLoaded', function() {
-  // Cargamos la lista de personas desde localStorage o la inicializamos
-  let persons = JSON.parse(localStorage.getItem('persons')) || [];
-  if (persons.length === 0) {
+  // Cargamos la lista de personas desde localStorage
+  let persons = JSON.parse(localStorage.getItem('persons'));
+  
+  // Si no existe o no tiene exactamente 20 elementos, se reinicializa
+  if (!persons || persons.length !== 20) {
+    persons = [];
     for (let i = 1; i <= 20; i++) {
       persons.push({
         id: i,
