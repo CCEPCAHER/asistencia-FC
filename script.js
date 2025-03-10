@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Lista de personas con información y rol de capitán
+  // Lista de personas (según la información proporcionada)
   const persons = [
     { name: "Lola Aradilla", isCaptain: false },
     { name: "Laura Andres", isCaptain: false },
@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Sandra Carvajal", isCaptain: false },
     { name: "Rosa Corpas", isCaptain: false },
     { name: "Alejandro Correa", isCaptain: false },
-    { name: "Isabel Cortés", isCaptain: false },
+    { name: "Isabel Cortés", 
+isCaptain: false },
     { name: "Erika Góngora", isCaptain: false },
     { name: "Rosario González", isCaptain: false },
     { name: "Alejandro Hernández", isCaptain: true },
@@ -21,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Montse de Hernández", isCaptain: false },
     { name: "Débora de Hosu", isCaptain: false },
     { name: "Samuel Hosu", isCaptain: true },
-    { name: "Eliana Julián", isCaptain: false },
+    { name: "Eliana Julián",
+isCaptain: false },
     { name: "Remedios Ligero", isCaptain: false },
     { name: "Olga Lópes 1", isCaptain: false },
     { name: "Iris López", isCaptain: false },
@@ -72,17 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
   
   let fixedAssignments = {};
   let availability = {};
-  let attendanceRecords = {};
-  let historyRecords = [];
   
-  // Función para obtener clave de disponibilidad (semana-turno)
+  // Función para obtener la clave de disponibilidad según semana y turno
   const getAvailabilityKey = () => {
     const week = document.getElementById("availWeekSelect").value;
     const turno = document.getElementById("availTurnSelect").value;
     return `${week}-${turno}`;
   };
   
-  // Rellena el dropdown de personas según el rol seleccionado
+  // Función para llenar el dropdown de personas según el rol seleccionado.
   const populatePersonSelect = () => {
     const role = document.getElementById("roleSelect").value;
     const personSelect = document.getElementById("personSelect");
@@ -102,19 +102,19 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("roleSelect").addEventListener("change", populatePersonSelect);
   populatePersonSelect();
   
-  // Guarda datos en LocalStorage
+  // Función para guardar los datos en LocalStorage.
   const saveToLocalStorage = () => {
     try {
       localStorage.setItem("fixedAssignments", JSON.stringify(fixedAssignments));
       localStorage.setItem("availability", JSON.stringify(availability));
       alert("Datos guardados localmente.");
     } catch (error) {
-      alert("Error al guardar en LocalStorage.");
+      alert("Error al guardar los datos en LocalStorage.");
       console.error(error);
     }
   };
   
-  // Carga datos desde LocalStorage
+  // Función para cargar los datos desde LocalStorage.
   const loadFromLocalStorage = () => {
     try {
       const loadedAssignments = localStorage.getItem("fixedAssignments");
@@ -124,16 +124,17 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Datos cargados desde LocalStorage.");
       populateAvailabilityList();
     } catch (error) {
-      alert("Error al cargar desde LocalStorage.");
+      alert("Error al cargar los datos desde LocalStorage.");
       console.error(error);
     }
   };
   
-  // Llena la lista de disponibilidad con un checkbox por persona
+  // Función para llenar la lista de disponibilidad con un checkbox por cada persona.
   const populateAvailabilityList = () => {
     const availListDiv = document.getElementById("availabilityList");
     availListDiv.innerHTML = "";
     const key = getAvailabilityKey();
+    // Si no hay datos guardados, por defecto todas están disponibles.
     const savedAvailability = (availability[key] && availability[key].length > 0)
       ? availability[key]
       : persons.map(p => p.name);
@@ -192,10 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
     alert(`Turno fijado para ${key} en rol ${role}: ${person}`);
   });
   
-  // Función para asignar turnos usando selección ponderada.
+  // Función de selección ponderada: mayor probabilidad a quien tenga menos turnos.
   function weightedRandomCandidate(candidates, counts) {
     let totalWeight = 0;
     const weights = candidates.map(candidate => {
+      // Se suma 1 al conteo para evitar división por cero
       const weight = 1 / (counts[candidate] + 1);
       totalWeight += weight;
       return weight;
@@ -208,14 +210,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return candidates[candidates.length - 1];
   }
   
-  // Genera el calendario con asignaciones fijas, disponibilidad y selección ponderada.
+  // Genera el calendario aplicando asignaciones fijas, disponibilidad, restricciones
+  // y utilizando la selección ponderada para una distribución equitativa.
   document.getElementById("btnGenerateSchedule").addEventListener("click", generateSchedule);
   
   function generateSchedule() {
     const allowMultiple = document.getElementById("allowMultipleCheckbox").checked;
     const turnos15 = document.getElementById("turnos15Checkbox").checked;
+    
+    // Inicializa un contador local para cada persona.
     let localCounts = {};
-    persons.forEach(p => { localCounts[p.name] = 0; });
+    persons.forEach(p => {
+      localCounts[p.name] = 0;
+    });
     
     const weeks = turnos15 ? ["S1", "S2"] : ["S1", "S2", "S3", "S4"];
     const turnos = ["MM", "MT1", "MT2", "XT1", "XT2", "J", "VT1", "VT2", "S", "D"];
@@ -227,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const key = `${week}-${turno}`;
         let shiftAssignment = { week, turno, capitan: null, publicadores: [null, null, null] };
         
+        // Aplicar asignaciones fijas y actualizar conteos.
         if (fixedAssignments[key]) {
           if (fixedAssignments[key].capitan) {
             shiftAssignment.capitan = fixedAssignments[key].capitan;
@@ -242,7 +250,9 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
         
+        // Lista de disponibles para el turno.
         let availableForShift = availability[key] ? [...availability[key]] : persons.map(p => p.name);
+        
         const filterCandidates = (candidates, condition) => {
           return candidates.filter(name => {
             if (!allowMultiple && assigned[name]) return false;
@@ -251,6 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         };
         
+        // Asignar capitán (si no está fijado) usando selección ponderada.
         if (!shiftAssignment.capitan) {
           const candidates = filterCandidates(availableForShift, person => person.isCaptain);
           if (candidates.length > 0) {
@@ -263,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         
+        // Asignar los 3 publicadores usando selección ponderada.
         for (let i = 0; i < 3; i++) {
           if (!shiftAssignment.publicadores[i]) {
             const candidates = filterCandidates(availableForShift, person => true);
@@ -281,10 +293,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
+    // Duplicar asignaciones para "Turnos cada 15 días" si está activado.
     if (turnos15) {
       const duplicates = scheduleResults.map(shift => {
         let newWeek = shift.week === "S1" ? "S3" : shift.week === "S2" ? "S4" : shift.week;
-        return { week: newWeek, turno: shift.turno, capitan: shift.capitan, publicadores: [...shift.publicadores] };
+        return {
+          week: newWeek,
+          turno: shift.turno,
+          capitan: shift.capitan,
+          publicadores: [...shift.publicadores]
+        };
       });
       scheduleResults = scheduleResults.concat(duplicates);
     }
@@ -292,87 +310,118 @@ document.addEventListener("DOMContentLoaded", () => {
     displaySchedule(scheduleResults);
   }
   
-  // Mapas para estilos en el calendario
-  const turnoMapping = {
-    "MM": "day-lunes",
-    "MT1": "day-martes-1",
-    "MT2": "day-martes-2",
-    "XT1": "day-miercoles-1",
-    "XT2": "day-miercoles-2",
-    "J": "day-jueves",
-    "VT1": "day-viernes-1",
-    "VT2": "day-viernes-2",
-    "S": "day-sabado",
-    "D": "day-domingo"
-  };
-  const weekMapping = {
-    "S1": "week-S1",
-    "S2": "week-S2",
-    "S3": "week-S3",
-    "S4": "week-S4"
-  };
+  // Mapeo para los días/turnos
+const turnoMapping = {
+  "MM": "day-lunes",
+  "MT1": "day-martes-1",
+  "MT2": "day-martes-2",
+  "XT1": "day-miercoles-1",
+  "XT2": "day-miercoles-2",
+  "J": "day-jueves",
+  "VT1": "day-viernes-1",
+  "VT2": "day-viernes-2",
+  "S": "day-sabado",
+  "D": "day-domingo"
+};
+
+// Mapeo para las semanas
+const weekMapping = {
+  "S1": "week-S1",
+  "S2": "week-S2",
+  "S3": "week-S3",
+  "S4": "week-S4"
+};
+
+function displaySchedule(scheduleResults) {
+  const container = document.getElementById("scheduleTableContainer");
+  container.innerHTML = "";
   
-  function displaySchedule(scheduleResults) {
-    const container = document.getElementById("scheduleTableContainer");
-    container.innerHTML = "";
-    const table = document.createElement("table");
-    table.className = "schedule-table";
-    
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    ["Semana", "Turno", "Capitán", "Publicador 1", "Publicador 2", "Publicador 3"].forEach(text => {
-      const th = document.createElement("th");
-      th.textContent = text;
-      headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-    
-    const tbody = document.createElement("tbody");
-    scheduleResults.forEach(item => {
-      const row = document.createElement("tr");
-      const tdWeek = document.createElement("td");
-      tdWeek.textContent = item.week;
-      const weekClass = weekMapping[item.week];
-      if (weekClass) tdWeek.classList.add(weekClass);
-      row.appendChild(tdWeek);
-      
-      const dayClass = turnoMapping[item.turno] || "";
-      const tdTurno = document.createElement("td");
-      tdTurno.textContent = item.turno;
-      if (dayClass) tdTurno.classList.add(dayClass);
-      row.appendChild(tdTurno);
-      
-      const tdCap = document.createElement("td");
-      tdCap.textContent = item.capitan;
-      if (dayClass) tdCap.classList.add(dayClass);
-      row.appendChild(tdCap);
-      
-      item.publicadores.forEach(pub => {
-        const tdPub = document.createElement("td");
-        tdPub.textContent = pub;
-        if (dayClass) tdPub.classList.add(dayClass);
-        row.appendChild(tdPub);
-      });
-      
-      tbody.appendChild(row);
-    });
-    table.appendChild(tbody);
-    container.appendChild(table);
-    
-    analyzeAssignments(scheduleResults);
-  }
+  const table = document.createElement("table");
+  table.className = "schedule-table";
   
-  // Analiza asignaciones y muestra turnos por persona.
+  // Cabecera de la tabla
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  ["Semana", "Turno", "Capitán", "Publicador 1", "Publicador 2", "Publicador 3"].forEach(text => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+  
+  // Cuerpo de la tabla
+  const tbody = document.createElement("tbody");
+  
+  scheduleResults.forEach(item => {
+    const row = document.createElement("tr");
+    
+    // Celda para la semana con su color independiente
+    const tdWeek = document.createElement("td");
+    tdWeek.textContent = item.week;
+    const weekClass = weekMapping[item.week];
+    if (weekClass) {
+      tdWeek.classList.add(weekClass);
+    }
+    row.appendChild(tdWeek);
+    
+    // Obtener la clase para el día/turno
+    const dayClass = turnoMapping[item.turno] || "";
+    
+    // Celda para el turno con su color
+    const tdTurno = document.createElement("td");
+    tdTurno.textContent = item.turno;
+    if (dayClass) {
+      tdTurno.classList.add(dayClass);
+    }
+    row.appendChild(tdTurno);
+    
+    // Celda para el capitán, aplicando el mismo color del día
+    const tdCap = document.createElement("td");
+    tdCap.textContent = item.capitan;
+    if (dayClass) {
+      tdCap.classList.add(dayClass);
+    }
+    row.appendChild(tdCap);
+    
+    // Celdas para los publicadores, aplicando el mismo color del día
+    item.publicadores.forEach(pub => {
+      const tdPub = document.createElement("td");
+      tdPub.textContent = pub;
+      if (dayClass) {
+        tdPub.classList.add(dayClass);
+      }
+      row.appendChild(tdPub);
+    });
+    
+    tbody.appendChild(row);
+  });
+  
+  table.appendChild(tbody);
+  container.appendChild(table);
+  
+  // Llama a la función para analizar las asignaciones, si la tienes
+  analyzeAssignments(scheduleResults);
+}
+  
+  // Función para analizar asignaciones y mostrar cuántos turnos tiene cada persona.
   function analyzeAssignments(scheduleResults) {
     let counts = {};
-    persons.forEach(p => { counts[p.name] = 0; });
+    persons.forEach(p => {
+      counts[p.name] = 0;
+    });
+    
     scheduleResults.forEach(shift => {
-      if (shift.capitan && shift.capitan !== "Sin asignar") counts[shift.capitan]++;
+      if (shift.capitan && shift.capitan !== "Sin asignar") {
+        counts[shift.capitan]++;
+      }
       shift.publicadores.forEach(pub => {
-        if (pub && pub !== "Sin asignar") counts[pub]++;
+        if (pub && pub !== "Sin asignar") {
+          counts[pub]++;
+        }
       });
     });
+    
     let analysisContainer = document.getElementById("assignmentAnalysis");
     if (!analysisContainer) {
       analysisContainer = document.createElement("div");
@@ -381,9 +430,11 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("scheduleSection").appendChild(analysisContainer);
     }
     analysisContainer.innerHTML = "";
+    
     const heading = document.createElement("h3");
     heading.textContent = "Resumen de Asignaciones";
     analysisContainer.appendChild(heading);
+    
     const list = document.createElement("ul");
     persons.forEach(p => {
       const li = document.createElement("li");
@@ -394,174 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
     analysisContainer.appendChild(list);
   }
   
-  // Exporta un PDF bonito con colores usando jsPDF y AutoTable.
-  function generateReport() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'pt');
-    const meetingDay = document.getElementById('meetingDay').value;
-    const records = Object.values(attendanceRecords).filter(r => r.meetingDay === meetingDay);
-    
-    if (records.length === 0) {
-      alert('⚠️ No hay registros para este día');
-      return;
-    }
-    
-    // Encabezado del PDF
-    doc.setFontSize(18);
-    doc.setTextColor(40, 62, 80);
-    doc.text(`Reporte de Asistencia - ${meetingDay.toUpperCase()}`, 40, 40);
-    
-    const headers = [["Nombre", "Estado", "Fecha"]];
-    const data = records.map(r => [
-      r.name,
-      { content: r.status.toUpperCase(), styles: { fillColor: getColor(r.status) } },
-      r.date
-    ]);
-    
-    doc.autoTable({
-      startY: 60,
-      head: headers,
-      body: data,
-      theme: 'grid',
-      headStyles: { fillColor: [41, 128, 185], textColor: 255, fontSize: 12 },
-      bodyStyles: { fontSize: 10, cellPadding: 5 },
-      alternateRowStyles: { fillColor: [255, 255, 255] },
-      styles: { halign: 'center' },
-      margin: { left: 40, right: 40 }
-    });
-    
-    doc.save(`Reporte_Asistencia_${meetingDay}_${new Date().toISOString().split('T')[0]}.pdf`);
-  }
-  
-  // Función que devuelve el color (RGB) según el estado.
-  function getColor(status) {
-    const colors = {
-      presencial: [39, 174, 96],
-      zoom: [41, 128, 185],
-      ausente: [192, 57, 43]
-    };
-    return colors[status];
-  }
-  
-  // Inicializa las tarjetas de asistencia.
-  function initializeApp() {
-    const container = document.getElementById('attendanceList');
-    
-    people.forEach(person => {
-      const card = document.createElement('div');
-      card.className = 'person-card';
-      card.innerHTML = `
-        <div class="person-name">${person.name}</div>
-        <div class="status-buttons">
-          <button class="status-btn presencial" data-status="presencial">Presencial</button>
-          <button class="status-btn zoom" data-status="zoom">Zoom</button>
-          <button class="status-btn ausente" data-status="ausente">Ausente</button>
-        </div>
-      `;
-      
-      // Evento para cada botón de estado.
-      card.querySelectorAll('.status-btn').forEach(button => {
-        button.addEventListener('click', () => {
-          const status = button.dataset.status;
-          const meetingDay = document.getElementById('meetingDay').value;
-          const date = new Date().toLocaleString();
-          
-          // Si ya hay registro para esta persona en el turno, se notifica.
-          if (attendanceRecords[person.name] && attendanceRecords[person.name].meetingDay === meetingDay) {
-            alert('Ya se ha ingresado un dato para esta persona. Para corregir, presiona "Corregir".');
-            return;
-          }
-          
-          // Actualiza estilos: marca el botón seleccionado y bloquea los demás.
-          card.querySelectorAll('.status-btn').forEach(btn => {
-            btn.classList.remove('selected');
-            btn.style.opacity = '0.7';
-            btn.disabled = true;
-          });
-          button.classList.add('selected');
-          button.style.opacity = '1';
-          
-          // Crea el registro de asistencia.
-          const record = {
-            id: person.name,
-            name: person.name,
-            status: status,
-            date: date,
-            meetingDay: meetingDay
-          };
-          attendanceRecords[person.name] = record;
-          historyRecords.push(record);
-          updateHistory(record);
-          
-          // Agrega botón de corrección (si no existe ya).
-          if (!card.querySelector('.correct-btn')) {
-            const correctBtn = document.createElement('button');
-            correctBtn.textContent = 'Corregir';
-            correctBtn.className = 'correct-btn';
-            correctBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              delete attendanceRecords[person.name];
-              card.querySelectorAll('.status-btn').forEach(btn => {
-                btn.disabled = false;
-                btn.classList.remove('selected');
-                btn.style.opacity = '0.7';
-              });
-              correctBtn.remove();
-              historyRecords = historyRecords.filter(r => !(r.id === person.name && r.meetingDay === meetingDay));
-              updateHistoryDisplay();
-            });
-            card.appendChild(correctBtn);
-          }
-        });
-      });
-      
-      container.appendChild(card);
-    });
-  }
-  
-  // Actualiza el historial visual (completo).
-  function updateHistoryDisplay() {
-    const historyList = document.getElementById('historyList');
-    historyList.innerHTML = "";
-    historyRecords.forEach(record => {
-      let borderClass = "";
-      if(record.status === 'presencial') borderClass = 'presencial-border';
-      else if(record.status === 'zoom') borderClass = 'zoom-border';
-      else if(record.status === 'ausente') borderClass = 'ausente-border';
-      const historyItem = document.createElement('div');
-      historyItem.className = `history-item ${borderClass}`;
-      historyItem.innerHTML = `
-        <div>
-          <div class="history-date">${record.date}</div>
-          <div class="history-name">${record.name}</div>
-        </div>
-        <div class="status-tag ${record.status}">${record.status.toUpperCase()}</div>
-      `;
-      historyList.prepend(historyItem);
-    });
-  }
-  
-  // Inicia la app al cargar el DOM.
-  window.addEventListener('DOMContentLoaded', initializeApp);
-  
-  // Eventos para almacenamiento en LocalStorage.
+  // Asignar eventos a botones de almacenamiento.
   document.getElementById("btnSaveStorage").addEventListener("click", saveToLocalStorage);
   document.getElementById("btnLoadStorage").addEventListener("click", loadFromLocalStorage);
-  
-  // Evento para generar el calendario.
-  document.getElementById("btnGenerateSchedule").addEventListener("click", generateSchedule);
-  
-  // Evento para exportar el reporte en PDF.
-  document.getElementById("btnGeneratePDF").addEventListener("click", generateReport);
 });
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('Service Worker registrado con éxito:', registration.scope);
-      })
-      .catch(error => {
-        console.error('Registro de Service Worker fallido:', error);
-      });
-  });
-}
