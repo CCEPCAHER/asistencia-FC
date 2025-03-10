@@ -1,451 +1,208 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Lista de personas (según la información proporcionada)
-  const persons = [
-    { name: "Lola Aradilla", isCaptain: false },
-    { name: "Laura Andres", isCaptain: false },
-    { name: "Antonia Carpintero", isCaptain: false },
-    { name: "Sara Baño", isCaptain: false },
-    { name: "Salvador Cadenas", isCaptain: true },
-    { name: "Montse (hija) Cadenas", isCaptain: false },
-    { name: "Franklin Carranza", isCaptain: true },
-    { name: "Vanessa de Carranza", isCaptain: false },
-    { name: "Sandra Carvajal", isCaptain: false },
-    { name: "Rosa Corpas", isCaptain: false },
-    { name: "Alejandro Correa", isCaptain: false },
-    { name: "Isabel Cortés", 
-isCaptain: false },
-    { name: "Erika Góngora", isCaptain: false },
-    { name: "Rosario González", isCaptain: false },
-    { name: "Alejandro Hernández", isCaptain: true },
-    { name: "Gloria Hernández", isCaptain: false },
-    { name: "Javier Hernández", isCaptain: true },
-    { name: "Montse de Hernández", isCaptain: false },
-    { name: "Débora de Hosu", isCaptain: false },
-    { name: "Samuel Hosu", isCaptain: true },
-    { name: "Eliana Julián",
-isCaptain: false },
-    { name: "Remedios Ligero", isCaptain: false },
-    { name: "Olga Lópes 1", isCaptain: false },
-    { name: "Iris López", isCaptain: false },
-    { name: "Abigaíl López", isCaptain: false },
-    { name: "Francisco López", isCaptain: true },
-    { name: "Mª Carmen Lucía", isCaptain: false },
-    { name: "Marta Martinez", isCaptain: false },
-    { name: "Cristina de Mínguez", isCaptain: false },
-    { name: "Francisco Mínguez", isCaptain: false },
-    { name: "Segundo Miranda", isCaptain: true },
-    { name: "María Montaño", isCaptain: false },
-    { name: "Encarna de Moreno", isCaptain: false },
-    { name: "José Moreno", isCaptain: true },
-    { name: "Estéfany Muñoz", isCaptain: false },
-    { name: "Jakeline Muñoz", isCaptain: false },
-    { name: "Jimmy Muñoz", isCaptain: true },
-    { name: "Samuel Ordoñez", isCaptain: true },
-    { name: "Zulema de Ordoñez", isCaptain: false },
-    { name: "Beatriz de Palomar", isCaptain: false },
-    { name: "Claudio Palomar", isCaptain: true },
-    { name: "Luis Fernando Paz", isCaptain: true },
-    { name: "Joselma Pereira", isCaptain: false },
-    { name: "Remedios Pérez", isCaptain: false },
-    { name: "Santiago Quimbayo", isCaptain: true },
-    { name: "Sara de Quimbayo", isCaptain: false },
-    { name: "Sebastián Rodríguez", isCaptain: true },
-    { name: "Javier Rodriguez", isCaptain: true },
-    { name: "Teresa de Rodríguez", isCaptain: false },
-    { name: "Aitana Ruíz", isCaptain: false },
-    { name: "Eliú Ruíz", isCaptain: true },
-    { name: "Juan Tomás Ruíz", isCaptain: false },
-    { name: "Mireia de Ruíz", isCaptain: false },
-    { name: "Rosa de Ruíz", isCaptain: false },
-    { name: "Juan Sabio", isCaptain: true },
-    { name: "Laura de Sabio", isCaptain: false },
-    { name: "Francisco Sánchez", isCaptain: true },
-    { name: "Ericka Sánchez", isCaptain: false },
-    { name: "Julissa de Soria", isCaptain: false },
-    { name: "Pablo Soria", isCaptain: false },
-    { name: "Juan Luis Torres", isCaptain: true },
-    { name: "Mercedes de Torres", isCaptain: false },
-    { name: "Cristihan Valdivieso", isCaptain: true },
-    { name: "Encarna de Velarde", isCaptain: false },
-    { name: "Andres Velarde", isCaptain: false },
-    { name: "Ethelinda Velázquez", isCaptain: false },
-    { name: "Manoli de Vich", isCaptain: false }
-  ];
+const people = [
+  { id: 1,  name: "Arellano, Carmen", absenceHistory: [] },
+  { id: 2,  name: "Bustos Navarro Felipe", absenceHistory: [] },
+  { id: 3,  name: "Bustos Lisandra", absenceHistory: [] },
+  { id: 4,  name: "Carranza, Franklin", absenceHistory: [] },
+  { id: 5,  name: "Carranza, Vanessa Jesse de", absenceHistory: [] },
+  { id: 6,  name: "Da Silva, Valdemir", absenceHistory: [] },
+  { id: 7,  name: "De Silva, Pereira Joelma de", absenceHistory: [] },
+  { id: 8,  name: "Dos Santos, Marcos", absenceHistory: [] },
+  { id: 9,  name: "Góngora, Érika", absenceHistory: [] },
+  { id: 10, name: "Góngora, Isabel Cortés de", absenceHistory: [] },
+  { id: 11, name: "Pereira Dos Santos, Joselma", absenceHistory: [] },
+  { id: 12, name: "Pulido, Manuel", absenceHistory: [] },
+  { id: 13, name: "Pulido Doncel, Brigita de", absenceHistory: [] },
+  { id: 14, name: "Rodríguez, Javier", absenceHistory: [] },
+  { id: 15, name: "Ruíz, Ronny David", absenceHistory: [] },
+  { id: 16, name: "Sánchez Maria Elena", absenceHistory: [] },
+  { id: 17, name: "Silvosa, Manuel", absenceHistory: [] },
+  { id: 18, name: "Valdivieso, Cristián", absenceHistory: [] },
+  { id: 19, name: "Valderrama, Jhon", absenceHistory: [] },
+  { id: 20, name: "Velázquez, Mª Ethelinda", absenceHistory: [] }
+];
+
+let attendanceRecords = {};
+let historyRecords = [];
+
+// Inicializa la aplicación: genera tarjetas para cada persona.
+function initializeApp() {
+  const container = document.getElementById('attendanceList');
   
-  let fixedAssignments = {};
-  let availability = {};
-  
-  // Función para obtener la clave de disponibilidad según semana y turno
-  const getAvailabilityKey = () => {
-    const week = document.getElementById("availWeekSelect").value;
-    const turno = document.getElementById("availTurnSelect").value;
-    return `${week}-${turno}`;
-  };
-  
-  // Función para llenar el dropdown de personas según el rol seleccionado.
-  const populatePersonSelect = () => {
-    const role = document.getElementById("roleSelect").value;
-    const personSelect = document.getElementById("personSelect");
-    personSelect.innerHTML = "";
+  people.forEach(person => {
+    const card = document.createElement('div');
+    card.className = 'person-card';
+    card.innerHTML = `
+      <div class="person-name">${person.name}</div>
+      <div class="status-buttons">
+        <button class="status-btn presencial" data-status="presencial">Presencial</button>
+        <button class="status-btn zoom" data-status="zoom">Zoom</button>
+        <button class="status-btn ausente" data-status="ausente">Ausente</button>
+      </div>
+    `;
     
-    const filtered = role === "capitan"
-      ? persons.filter(p => p.isCaptain)
-      : persons;
-    
-    filtered.forEach(p => {
-      const option = document.createElement("option");
-      option.value = p.name;
-      option.textContent = p.name;
-      personSelect.appendChild(option);
-    });
-  };
-  document.getElementById("roleSelect").addEventListener("change", populatePersonSelect);
-  populatePersonSelect();
-  
-  // Función para guardar los datos en LocalStorage.
-  const saveToLocalStorage = () => {
-    try {
-      localStorage.setItem("fixedAssignments", JSON.stringify(fixedAssignments));
-      localStorage.setItem("availability", JSON.stringify(availability));
-      alert("Datos guardados localmente.");
-    } catch (error) {
-      alert("Error al guardar los datos en LocalStorage.");
-      console.error(error);
-    }
-  };
-  
-  // Función para cargar los datos desde LocalStorage.
-  const loadFromLocalStorage = () => {
-    try {
-      const loadedAssignments = localStorage.getItem("fixedAssignments");
-      const loadedAvailability = localStorage.getItem("availability");
-      if (loadedAssignments) fixedAssignments = JSON.parse(loadedAssignments);
-      if (loadedAvailability) availability = JSON.parse(loadedAvailability);
-      alert("Datos cargados desde LocalStorage.");
-      populateAvailabilityList();
-    } catch (error) {
-      alert("Error al cargar los datos desde LocalStorage.");
-      console.error(error);
-    }
-  };
-  
-  // Función para llenar la lista de disponibilidad con un checkbox por cada persona.
-  const populateAvailabilityList = () => {
-    const availListDiv = document.getElementById("availabilityList");
-    availListDiv.innerHTML = "";
-    const key = getAvailabilityKey();
-    // Si no hay datos guardados, por defecto todas están disponibles.
-    const savedAvailability = (availability[key] && availability[key].length > 0)
-      ? availability[key]
-      : persons.map(p => p.name);
-    
-    persons.forEach(p => {
-      const container = document.createElement("div");
-      container.classList.add("checkbox-container");
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.value = p.name;
-      checkbox.id = `avail_${p.name.replace(/\s+/g, '_')}`;
-      checkbox.checked = savedAvailability.includes(p.name);
-      
-      const label = document.createElement("label");
-      label.htmlFor = checkbox.id;
-      label.textContent = p.name;
-      
-      container.appendChild(checkbox);
-      container.appendChild(label);
-      availListDiv.appendChild(container);
-    });
-  };
-  
-  document.getElementById("availWeekSelect").addEventListener("change", populateAvailabilityList);
-  document.getElementById("availTurnSelect").addEventListener("change", populateAvailabilityList);
-  populateAvailabilityList();
-  
-  // Guarda la disponibilidad para la semana y turno seleccionados.
-  document.getElementById("btnSaveAvailability").addEventListener("click", () => {
-    const key = getAvailabilityKey();
-    const checkboxes = document.querySelectorAll("#availabilityList input[type='checkbox']");
-    const availablePersons = Array.from(checkboxes)
-      .filter(chk => chk.checked)
-      .map(chk => chk.value);
-    availability[key] = availablePersons;
-    alert(`Disponibilidad guardada para ${key}`);
-  });
-  
-  // Fija la asignación para un turno y rol.
-  document.getElementById("btnFixAssignment").addEventListener("click", () => {
-    const week = document.getElementById("weekSelect").value;
-    const turno = document.getElementById("turnSelect").value;
-    const role = document.getElementById("roleSelect").value;
-    const person = document.getElementById("personSelect").value;
-    const key = `${week}-${turno}`;
-    
-    if (!fixedAssignments[key]) {
-      fixedAssignments[key] = { capitan: null, publicadores: [null, null, null] };
-    }
-    if (role === "capitan") {
-      fixedAssignments[key].capitan = person;
-    } else if (role.startsWith("publicador")) {
-      const index = parseInt(role.slice(-1)) - 1;
-      fixedAssignments[key].publicadores[index] = person;
-    }
-    alert(`Turno fijado para ${key} en rol ${role}: ${person}`);
-  });
-  
-  // Función de selección ponderada: mayor probabilidad a quien tenga menos turnos.
-  function weightedRandomCandidate(candidates, counts) {
-    let totalWeight = 0;
-    const weights = candidates.map(candidate => {
-      // Se suma 1 al conteo para evitar división por cero
-      const weight = 1 / (counts[candidate] + 1);
-      totalWeight += weight;
-      return weight;
-    });
-    let random = Math.random() * totalWeight;
-    for (let i = 0; i < candidates.length; i++) {
-      random -= weights[i];
-      if (random <= 0) return candidates[i];
-    }
-    return candidates[candidates.length - 1];
-  }
-  
-  // Genera el calendario aplicando asignaciones fijas, disponibilidad, restricciones
-  // y utilizando la selección ponderada para una distribución equitativa.
-  document.getElementById("btnGenerateSchedule").addEventListener("click", generateSchedule);
-  
-  function generateSchedule() {
-    const allowMultiple = document.getElementById("allowMultipleCheckbox").checked;
-    const turnos15 = document.getElementById("turnos15Checkbox").checked;
-    
-    // Inicializa un contador local para cada persona.
-    let localCounts = {};
-    persons.forEach(p => {
-      localCounts[p.name] = 0;
-    });
-    
-    const weeks = turnos15 ? ["S1", "S2"] : ["S1", "S2", "S3", "S4"];
-    const turnos = ["MM", "MT1", "MT2", "XT1", "XT2", "J", "VT1", "VT2", "S", "D"];
-    let scheduleResults = [];
-    
-    weeks.forEach(week => {
-      let assigned = {};
-      turnos.forEach(turno => {
-        const key = `${week}-${turno}`;
-        let shiftAssignment = { week, turno, capitan: null, publicadores: [null, null, null] };
+    // Agrega evento a cada botón de estado
+    card.querySelectorAll('.status-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const status = button.dataset.status;
+        const meetingDay = document.getElementById('meetingDay').value;
+        const date = new Date().toLocaleString();
         
-        // Aplicar asignaciones fijas y actualizar conteos.
-        if (fixedAssignments[key]) {
-          if (fixedAssignments[key].capitan) {
-            shiftAssignment.capitan = fixedAssignments[key].capitan;
-            if (!allowMultiple) assigned[fixedAssignments[key].capitan] = true;
-            localCounts[fixedAssignments[key].capitan]++;
-          }
-          fixedAssignments[key].publicadores.forEach((p, i) => {
-            if (p) {
-              shiftAssignment.publicadores[i] = p;
-              if (!allowMultiple) assigned[p] = true;
-              localCounts[p]++;
-            }
-          });
+        // Si ya existe un registro para esta persona en el mismo día, no permitir nueva entrada.
+        if(attendanceRecords[person.id] && attendanceRecords[person.id].meetingDay === meetingDay) {
+          alert('Ya se ha ingresado un dato para esta persona. Para corregir, presiona el botón "Corregir".');
+          return;
         }
         
-        // Lista de disponibles para el turno.
-        let availableForShift = availability[key] ? [...availability[key]] : persons.map(p => p.name);
+        // Actualiza estilos: marca el botón seleccionado y reduce opacidad de los demás.
+        card.querySelectorAll('.status-btn').forEach(btn => {
+          btn.classList.remove('selected');
+          btn.style.opacity = '0.7';
+          btn.disabled = true;  // Bloquea para que no se registre otro dato.
+        });
+        button.classList.add('selected');
+        button.style.opacity = '1';
         
-        const filterCandidates = (candidates, condition) => {
-          return candidates.filter(name => {
-            if (!allowMultiple && assigned[name]) return false;
-            const personObj = persons.find(p => p.name === name);
-            return personObj && condition(personObj);
-          });
+        // Crear registro
+        const record = {
+          id: person.id,
+          name: person.name,
+          status: status,
+          date: date,
+          meetingDay: meetingDay
         };
         
-        // Asignar capitán (si no está fijado) usando selección ponderada.
-        if (!shiftAssignment.capitan) {
-          const candidates = filterCandidates(availableForShift, person => person.isCaptain);
-          if (candidates.length > 0) {
-            const chosen = weightedRandomCandidate(candidates, localCounts);
-            shiftAssignment.capitan = chosen;
-            if (!allowMultiple) assigned[chosen] = true;
-            localCounts[chosen]++;
-          } else {
-            shiftAssignment.capitan = "Sin asignar";
-          }
-        }
+        attendanceRecords[person.id] = record;
+        historyRecords.push(record);
+        updateHistory(record);
         
-        // Asignar los 3 publicadores usando selección ponderada.
-        for (let i = 0; i < 3; i++) {
-          if (!shiftAssignment.publicadores[i]) {
-            const candidates = filterCandidates(availableForShift, person => true);
-            if (candidates.length > 0) {
-              const chosen = weightedRandomCandidate(candidates, localCounts);
-              shiftAssignment.publicadores[i] = chosen;
-              if (!allowMultiple) assigned[chosen] = true;
-              localCounts[chosen]++;
-            } else {
-              shiftAssignment.publicadores[i] = "Sin asignar";
-            }
-          }
+        // Agregar botón de corrección si no existe
+        if(!card.querySelector('.correct-btn')) {
+          const correctBtn = document.createElement('button');
+          correctBtn.textContent = 'Corregir';
+          correctBtn.className = 'correct-btn';
+          correctBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Remover el registro para esta persona
+            delete attendanceRecords[person.id];
+            // Rehabilitar botones de estado
+            card.querySelectorAll('.status-btn').forEach(btn => {
+              btn.disabled = false;
+              btn.classList.remove('selected');
+              btn.style.opacity = '0.7';
+            });
+            // Remover botón de corrección
+            correctBtn.remove();
+            // Remover registro del historial y actualizar visualización
+            historyRecords = historyRecords.filter(r => !(r.id === person.id && r.meetingDay === meetingDay));
+            updateHistoryDisplay();
+          });
+          card.appendChild(correctBtn);
         }
-        
-        scheduleResults.push(shiftAssignment);
       });
     });
     
-    // Duplicar asignaciones para "Turnos cada 15 días" si está activado.
-    if (turnos15) {
-      const duplicates = scheduleResults.map(shift => {
-        let newWeek = shift.week === "S1" ? "S3" : shift.week === "S2" ? "S4" : shift.week;
-        return {
-          week: newWeek,
-          turno: shift.turno,
-          capitan: shift.capitan,
-          publicadores: [...shift.publicadores]
-        };
-      });
-      scheduleResults = scheduleResults.concat(duplicates);
-    }
-    
-    displaySchedule(scheduleResults);
-  }
-  
-  // Mapeo para los días/turnos
-const turnoMapping = {
-  "MM": "day-lunes",
-  "MT1": "day-martes-1",
-  "MT2": "day-martes-2",
-  "XT1": "day-miercoles-1",
-  "XT2": "day-miercoles-2",
-  "J": "day-jueves",
-  "VT1": "day-viernes-1",
-  "VT2": "day-viernes-2",
-  "S": "day-sabado",
-  "D": "day-domingo"
-};
-
-// Mapeo para las semanas
-const weekMapping = {
-  "S1": "week-S1",
-  "S2": "week-S2",
-  "S3": "week-S3",
-  "S4": "week-S4"
-};
-
-function displaySchedule(scheduleResults) {
-  const container = document.getElementById("scheduleTableContainer");
-  container.innerHTML = "";
-  
-  const table = document.createElement("table");
-  table.className = "schedule-table";
-  
-  // Cabecera de la tabla
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-  ["Semana", "Turno", "Capitán", "Publicador 1", "Publicador 2", "Publicador 3"].forEach(text => {
-    const th = document.createElement("th");
-    th.textContent = text;
-    headerRow.appendChild(th);
+    container.appendChild(card);
   });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-  
-  // Cuerpo de la tabla
-  const tbody = document.createElement("tbody");
-  
-  scheduleResults.forEach(item => {
-    const row = document.createElement("tr");
-    
-    // Celda para la semana con su color independiente
-    const tdWeek = document.createElement("td");
-    tdWeek.textContent = item.week;
-    const weekClass = weekMapping[item.week];
-    if (weekClass) {
-      tdWeek.classList.add(weekClass);
-    }
-    row.appendChild(tdWeek);
-    
-    // Obtener la clase para el día/turno
-    const dayClass = turnoMapping[item.turno] || "";
-    
-    // Celda para el turno con su color
-    const tdTurno = document.createElement("td");
-    tdTurno.textContent = item.turno;
-    if (dayClass) {
-      tdTurno.classList.add(dayClass);
-    }
-    row.appendChild(tdTurno);
-    
-    // Celda para el capitán, aplicando el mismo color del día
-    const tdCap = document.createElement("td");
-    tdCap.textContent = item.capitan;
-    if (dayClass) {
-      tdCap.classList.add(dayClass);
-    }
-    row.appendChild(tdCap);
-    
-    // Celdas para los publicadores, aplicando el mismo color del día
-    item.publicadores.forEach(pub => {
-      const tdPub = document.createElement("td");
-      tdPub.textContent = pub;
-      if (dayClass) {
-        tdPub.classList.add(dayClass);
-      }
-      row.appendChild(tdPub);
-    });
-    
-    tbody.appendChild(row);
-  });
-  
-  table.appendChild(tbody);
-  container.appendChild(table);
-  
-  // Llama a la función para analizar las asignaciones, si la tienes
-  analyzeAssignments(scheduleResults);
 }
-  
-  // Función para analizar asignaciones y mostrar cuántos turnos tiene cada persona.
-  function analyzeAssignments(scheduleResults) {
-    let counts = {};
-    persons.forEach(p => {
-      counts[p.name] = 0;
-    });
-    
-    scheduleResults.forEach(shift => {
-      if (shift.capitan && shift.capitan !== "Sin asignar") {
-        counts[shift.capitan]++;
-      }
-      shift.publicadores.forEach(pub => {
-        if (pub && pub !== "Sin asignar") {
-          counts[pub]++;
-        }
-      });
-    });
-    
-    let analysisContainer = document.getElementById("assignmentAnalysis");
-    if (!analysisContainer) {
-      analysisContainer = document.createElement("div");
-      analysisContainer.id = "assignmentAnalysis";
-      analysisContainer.style.marginTop = "20px";
-      document.getElementById("scheduleSection").appendChild(analysisContainer);
+
+// Agrega un registro al historial visual
+function updateHistory(record) {
+  const historyList = document.getElementById('historyList');
+  const historyItem = document.createElement('div');
+  let borderClass = '';
+  if(record.status === 'presencial') {
+    borderClass = 'presencial-border';
+  } else if(record.status === 'zoom') {
+    borderClass = 'zoom-border';
+  } else if(record.status === 'ausente') {
+    borderClass = 'ausente-border';
+  }
+  historyItem.className = `history-item ${borderClass}`;
+  historyItem.innerHTML = `
+    <div>
+      <div class="history-date">${record.date}</div>
+      <div class="history-name">${record.name}</div>
+    </div>
+    <div class="status-tag ${record.status}">${record.status.toUpperCase()}</div>
+  `;
+  historyList.prepend(historyItem);
+}
+
+// Re-renderiza todo el historial (por ejemplo, al corregir un registro)
+function updateHistoryDisplay() {
+  const historyList = document.getElementById('historyList');
+  historyList.innerHTML = '';
+  historyRecords.forEach(record => {
+    let borderClass = '';
+    if(record.status === 'presencial') {
+      borderClass = 'presencial-border';
+    } else if(record.status === 'zoom') {
+      borderClass = 'zoom-border';
+    } else if(record.status === 'ausente') {
+      borderClass = 'ausente-border';
     }
-    analysisContainer.innerHTML = "";
-    
-    const heading = document.createElement("h3");
-    heading.textContent = "Resumen de Asignaciones";
-    analysisContainer.appendChild(heading);
-    
-    const list = document.createElement("ul");
-    persons.forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = `${p.name}: ${counts[p.name]} turno(s)`;
-      li.style.color = counts[p.name] === 0 ? "red" : "green";
-      list.appendChild(li);
-    });
-    analysisContainer.appendChild(list);
+    const historyItem = document.createElement('div');
+    historyItem.className = `history-item ${borderClass}`;
+    historyItem.innerHTML = `
+      <div>
+        <div class="history-date">${record.date}</div>
+        <div class="history-name">${record.name}</div>
+      </div>
+      <div class="status-tag ${record.status}">${record.status.toUpperCase()}</div>
+    `;
+    historyList.prepend(historyItem);
+  });
+}
+
+// Genera el reporte PDF usando jsPDF y jsPDF-AutoTable
+function generateReport() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const meetingDay = document.getElementById('meetingDay').value;
+  const records = Object.values(attendanceRecords).filter(r => r.meetingDay === meetingDay);
+  
+  if (records.length === 0) {
+    alert('⚠️ No hay registros para este día');
+    return;
   }
   
-  // Asignar eventos a botones de almacenamiento.
-  document.getElementById("btnSaveStorage").addEventListener("click", saveToLocalStorage);
-  document.getElementById("btnLoadStorage").addEventListener("click", loadFromLocalStorage);
-});
+  doc.setFontSize(18);
+  doc.setTextColor(40, 62, 80);
+  doc.text(`Reporte de Asistencia - ${meetingDay.toUpperCase()}`, 15, 20);
+  
+  const headers = [["Nombre", "Estado", "Fecha"]];
+  const data = records.map(r => [
+    r.name,
+    { content: r.status.toUpperCase(), styles: { fillColor: getColor(r.status) } },
+    r.date
+  ]);
+  
+  doc.autoTable({
+    startY: 30,
+    head: headers,
+    body: data,
+    theme: 'grid',
+    headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+    styles: { fontSize: 10, cellPadding: 3 },
+    columnStyles: {
+      0: { cellWidth: 80 },
+      1: { cellWidth: 30 },
+      2: { cellWidth: 60 }
+    }
+  });
+  
+  doc.save(`Asistencia_${meetingDay}_${new Date().toISOString().split('T')[0]}.pdf`);
+}
+
+// Devuelve un color RGB según el estado
+function getColor(status) {
+  const colors = {
+    presencial: [39, 174, 96],
+    zoom: [41, 128, 185],
+    ausente: [192, 57, 43]
+  };
+  return colors[status];
+}
+
+// Inicia la aplicación al cargar el DOM
+window.addEventListener('DOMContentLoaded', initializeApp);
