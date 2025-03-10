@@ -1,55 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Control de Asistencia</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencias Profesional</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Control de Asistencia</h1>
-    
-    <!-- Sección para definir las fechas de reunión -->
-    <div class="meeting-dates">
-      <div class="date-field">
-        <label for="weekday-date">Reunión entre semana (Jueves):</label>
-        <input type="date" id="weekday-date">
-      </div>
-      <div class="date-field">
-        <label for="weekend-date">Reunión fin de semana:</label>
-        <input type="date" id="weekend-date">
-      </div>
-      <button id="saveMeeting">Guardar Reunión</button>
+    <div class="container">
+        <div class="header">
+            <h1>Control de Asistencias</h1>
+            <div id="meetingHeader">
+                <div class="meeting-title">Reunión Actual</div>
+                <div class="meeting-date" id="currentDate"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <select id="meetingDay">
+                <option value="jueves">Jueves</option>
+                <option value="finDeSemana">Fin de Semana</option>
+            </select>
+          <button id="generateReport" onclick="generateReport()">Generar Reporte PDF</button>
+        </div>
+
+        <div id="attendanceList" class="attendance-list"></div>
+
+        <div class="history">
+            <h3>Historial de Cambios:</h3>
+            <div id="historyList"></div>
+        </div>
     </div>
-    
-    <!-- Botón para reiniciar el listado (útil en producción si ya existen datos en localStorage) -->
-    <button id="resetList">Reiniciar Listado</button>
-    
-    <!-- Tabla de asistencia -->
-    <table id="attendanceTable">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Jueves</th>
-          <th>Fin de Semana</th>
-          <th>Faltas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Se generarán las filas mediante JavaScript -->
-      </tbody>
-    </table>
-    
-    <!-- Botón para exportar a Excel (CSV) -->
-    <button id="exportExcel">Descargar Excel (CSV)</button>
-    
-    <!-- Sección para mostrar historial de faltas de cada persona -->
-    <h2>Historial de Faltas</h2>
-    <div id="absenceHistory">
-      <p>Haz clic en el número de faltas de cada persona para ver el detalle.</p>
-    </div>
-  </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
