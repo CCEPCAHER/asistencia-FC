@@ -3,113 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestor de Turnos</title>
-  <!-- Asegúrate de que style.css esté en el mismo directorio -->
+  <title>Control de Asistencias</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Librerías para generar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Gestor de Turnos</h1>
-  </header>
-  
-  <main>
-    <!-- Asignaciones fijas -->
-    <section class="section" id="fixedAssignmentSection">
-      <h2>Asignaciones Fijas</h2>
-      <div class="form-group">
-        <label for="weekSelect">Semana:</label>
-        <select id="weekSelect">
-          <option value="S1">S1</option>
-          <option value="S2">S2</option>
-          <option value="S3">S3</option>
-          <option value="S4">S4</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="turnSelect">Turno:</label>
-        <select id="turnSelect">
-          <option value="MM">MM</option>
-          <option value="MT1">MT1</option>
-          <option value="MT2">MT2</option>
-          <option value="XT1">XT1</option>
-          <option value="XT2">XT2</option>
-          <option value="J">J</option>
-          <option value="VT1">VT1</option>
-          <option value="VT2">VT2</option>
-          <option value="S">S</option>
-          <option value="D">D</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="roleSelect">Rol:</label>
-        <select id="roleSelect">
-          <option value="capitan">Capitán</option>
-          <option value="publicador1">Publicador 1</option>
-          <option value="publicador2">Publicador 2</option>
-          <option value="publicador3">Publicador 3</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="personSelect">Persona:</label>
-        <select id="personSelect"></select>
-      </div>
-      <button id="btnFixAssignment">Fijar Asignación</button>
-    </section>
+  <div class="container">
+    <h1>📋 Control de Asistencias</h1>
     
-    <!-- Disponibilidad -->
-    <section class="section" id="availabilitySection">
-      <h2>Disponibilidad</h2>
-      <div class="form-group">
-        <label for="availWeekSelect">Semana:</label>
-        <select id="availWeekSelect">
-          <option value="S1">S1</option>
-          <option value="S2">S2</option>
-          <option value="S3">S3</option>
-          <option value="S4">S4</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="availTurnSelect">Turno:</label>
-        <select id="availTurnSelect">
-          <option value="MM">MM</option>
-          <option value="MT1">MT1</option>
-          <option value="MT2">MT2</option>
-          <option value="XT1">XT1</option>
-          <option value="XT2">XT2</option>
-          <option value="J">J</option>
-          <option value="VT1">VT1</option>
-          <option value="VT2">VT2</option>
-          <option value="S">S</option>
-          <option value="D">D</option>
-        </select>
-      </div>
-      <div id="availabilityList"></div>
-      <button id="btnSaveAvailability">Guardar Disponibilidad</button>
-    </section>
+    <div class="controls">
+      <select id="meetingDay">
+        <option value="jueves">Reunión Jueves</option>
+        <option value="finDeSemana">Reunión Fin de Semana</option>
+      </select>
+      <button id="generateReport" onclick="generateReport()">⬇️ Descargar Reporte</button>
+    </div>
+
+    <div id="attendanceList" class="attendance-list"></div>
     
-    <!-- Generación de calendario -->
-    <section class="section" id="scheduleSection">
-      <h2>Generar Calendario</h2>
-      <div class="form-group">
-        <input type="checkbox" id="allowMultipleCheckbox">
-        <label for="allowMultipleCheckbox">Permitir asignar múltiples turnos por semana</label>
-      </div>
-      <div class="form-group">
-        <input type="checkbox" id="turnos15Checkbox">
-        <label for="turnos15Checkbox">Turnos cada 15 días</label>
-      </div>
-      <button id="btnGenerateSchedule">Generar Calendario</button>
-      <div id="scheduleTableContainer"></div>
-    </section>
-    
-    <!-- Guardado y carga en LocalStorage -->
-    <section class="section" id="storageSection">
-      <h2>Almacenamiento</h2>
-      <button id="btnSaveStorage">Guardar en LocalStorage</button>
-      <button id="btnLoadStorage">Cargar desde LocalStorage</button>
-    </section>
-  </main>
-  
+    <div class="history">
+      <h3>Últimos registros:</h3>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
