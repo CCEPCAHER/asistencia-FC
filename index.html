@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control de Asistencias</title>
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- Librerías para generar PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -11,14 +13,19 @@
 </head>
 <body>
   <div class="container">
-    <h1>📋 Control de Asistencias</h1>
+    <header>
+      <h1>📋 Control de Asistencias</h1>
+      <div id="currentDate"></div>
+    </header>
     
     <div class="controls">
+      <!-- Selector estilizado para el tipo de reunión -->
       <select id="meetingDay">
-        <option value="jueves">Reunión Jueves</option>
+        <option value="entresemana">Reunión Entresemana</option>
         <option value="finDeSemana">Reunión Fin de Semana</option>
       </select>
-      <button id="generateReport" onclick="generateReport()">⬇️ Descargar Reporte</button>
+      <!-- Nuevo input para indicar la fecha de la reunión -->
+      <input type="date" id="meetingDate">
     </div>
 
     <div id="attendanceList" class="attendance-list"></div>
@@ -28,6 +35,9 @@
       <div id="historyList"></div>
     </div>
   </div>
+
+  <!-- Botón fijo para descargar el reporte PDF -->
+  <button id="generateReport" onclick="generateReport()">⬇️ Descargar Reporte</button>
 
   <script src="script.js"></script>
 </body>
