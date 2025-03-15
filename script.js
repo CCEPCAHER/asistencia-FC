@@ -63,14 +63,13 @@ function initializeApp() {
         
         // Crea el nuevo registro, incluyendo la fecha de la reunión
         const newRecord = {
-          id: person.id,
-          name: person.name,
-          status: status,
-          date: date,
-          meetingDay: meetingDay,
-          meetingDate: meetingDate
-        };
-        
+  id: person.id,
+  name: person.name, // Asegúrate de que person.name tenga valor
+  status: status,
+  date: date,
+  meetingDay: meetingDay,
+  meetingDate: meetingDate
+};
         // Si ya existe un registro para esta persona con la misma fecha de reunión, se sobreescribe.
         if(attendanceRecords[person.id] && attendanceRecords[person.id].meetingDate === meetingDate) {
           attendanceRecords[person.id] = newRecord;
@@ -208,17 +207,28 @@ function computeConsecutiveCounts(personData, meetingDay) {
 // Genera el reporte PDF usando jsPDF y jsPDF-AutoTable
 function generateReport() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
   const meetingDay = document.getElementById('meetingDay').value;
   const meetingDate = document.getElementById('meetingDate').value;
-  const records = Object.values(attendanceRecords).filter(r => r.meetingDay === meetingDay && r.meetingDate === meetingDate);
+
+  if (!meetingDate) {
+    alert("Por favor, indique la fecha de la reunión.");
+    return;
+  }
+
+  // Filtra los registros correspondientes al día y fecha de reunión actual
+  const records = Object.values(attendanceRecords).filter(
+    r => r.meetingDay === meetingDay && r.meetingDate === meetingDate
+  );
   
-  if (records.length === 0) {
-    alert('⚠️ No hay registros para este día');
+  // Verifica que se hayan seleccionado todos los publicadores
+  if (records.length < people.length) {
+    alert("Por favor, seleccione el estado de todos los publicadores antes de descargar el reporte.");
     return;
   }
   
-  // Encabezado del PDF con datos ampliados
+  // Si todos los publicadores tienen registro, se genera el reporte
+  const doc = new jsPDF();
+  
   doc.setFontSize(18);
   doc.setTextColor(40, 62, 80);
   doc.text("Reporte de Asistencia", 15, 20);
@@ -226,7 +236,6 @@ function generateReport() {
   doc.text(`Reunión: ${meetingDay === 'entresemana' ? 'Entresemana' : 'Fin de Semana'}`, 15, 30);
   doc.text(`Fecha de la reunión: ${meetingDate}`, 15, 40);
   
-  // Define las cabeceras de la tabla, incluyendo las nuevas columnas
   const headers = [[
     "Nombre", 
     "Estado", 
@@ -235,7 +244,6 @@ function generateReport() {
     "Faltas Consecutivas"
   ]];
   
-  // Prepara los datos de la tabla
   const data = records.map(r => {
     const personData = people.find(p => p.id === r.id);
     let attendanceStreak = 0;
@@ -254,7 +262,6 @@ function generateReport() {
     ];
   });
   
-  // Dibuja la tabla (se inicia a partir de y=50 para dejar espacio al encabezado)
   doc.autoTable({
     startY: 50,
     head: headers,
@@ -272,8 +279,6 @@ function generateReport() {
   });
   
   doc.save(`Asistencia_${meetingDay}_${meetingDate}.pdf`);
-  
-  // Una vez descargado el reporte, reinicia la aplicación
   resetApp();
 }
 
