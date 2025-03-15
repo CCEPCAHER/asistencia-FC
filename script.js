@@ -15,7 +15,7 @@ const people = [
   { id: 14, name: "Rodríguez, Javier", absenceHistory: [] },
   { id: 15, name: "Ruíz, Ronny David", absenceHistory: [] },
   { id: 16, name: "Sánchez Maria Elena", absenceHistory: [] },
-  { id: 17, name: "Silvosa, Manuel", absenceHistory: [] },
+  { id: 17, name: "Silvosa, Manoli", absenceHistory: [] },
   { id: 18, name: "Valdivieso, Cristián", absenceHistory: [] },
   { id: 19, name: "Valderrama, Jhon", absenceHistory: [] },
   { id: 20, name: "Velázquez, Mª Ethelinda", absenceHistory: [] }
