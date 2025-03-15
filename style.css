@@ -169,7 +169,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.5);
   border-left: 5px solid;
   padding: 12px;
   margin-bottom: 10px;
@@ -185,9 +185,8 @@ body {
 .history-name {
   font-size: 1em;
   font-weight: 600;
-  color: #fff;
+  color: #333; /* Color oscuro para mayor contraste */
 }
-
 /* Botón flotante con parpadeo */
 #generateReport {
   position: fixed;
